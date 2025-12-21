@@ -4,11 +4,21 @@ import random
 import os
 import re
 import numpy as np
+import zipfile
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-model = joblib.load(os.path.join(BASE_DIR, "model.joblib"))
+MODEL_ZIP_PATH = os.path.join(BASE_DIR, "model.zip")
+MODEL_EXTRACT_PATH = os.path.join(BASE_DIR, "model")
+
+if not os.path.exists(MODEL_EXTRACT_PATH):
+    with zipfile.ZipFile(MODEL_ZIP_PATH, "r") as zip_ref:
+        zip_ref.extractall(MODEL_EXTRACT_PATH)
+
+model = joblib.load(os.path.join(MODEL_EXTRACT_PATH, "model.joblib"))
+
 vectorizer = joblib.load(os.path.join(BASE_DIR, "vectorizer.joblib"))
+
 movies_df = pd.read_csv(os.path.join(BASE_DIR, "movies.csv"))
 
 emotion_to_genres = {
@@ -106,4 +116,5 @@ def recommend_movies(predicted_labels, n=5):
                 recommended.extend(picks["title"].tolist())
 
     return list(dict.fromkeys(recommended))[:10]
+
 
