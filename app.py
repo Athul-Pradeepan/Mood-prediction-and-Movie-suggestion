@@ -6,7 +6,7 @@ st.set_page_config(page_title="Mood & Movie Recommender",page_icon="🎬",layout
 st.title("😀 Mood Prediction & Movie Suggestion 🎥")
 st.write("Tell me how you're feeling, and I’ll suggest movies for you!")
 
-user_input = st.text_area("How are you feeling today?",placeholder="Example: I feel tired but happy after a long day...")
+user_input = st.text_area("How are you feeling today?",placeholder="Example: I feel lonely and very sad today")
 
 emoji_map = {'anger': '😤','fear': '😨','joy': '😊','love': '❤️','sadness': '😢','surprise': '😳'}
 
@@ -41,3 +41,4 @@ if st.button("Predict Mood & Suggest Movies 🎯"):
                     st.markdown(f"🍿 **{movie}**")
             else:
                 st.info("No suitable movies found for this mood.")
+
